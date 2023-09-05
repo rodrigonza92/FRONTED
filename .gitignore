@@ -1,0 +1,31 @@
+#Archivos de configuración del editor
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Dependencias
+/node_modules/
+
+# Archivos de registro
+npm-debug.log
+yarn-error.log
+
+# Directorios de construcción
+/dist/
+/build/
+
+# Archivos temporales
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de caché
+.cache/
