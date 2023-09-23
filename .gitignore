@@ -29,3 +29,7 @@ Thumbs.db
 
 # Archivos de caché
 .cache/
+
+# Entornos virtuales
+venv/
+env/
