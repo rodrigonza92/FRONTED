@@ -25,9 +25,7 @@ label{
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    width: 100%;
-    min-height: 100%;
-    padding: 20px;
+    height: 100vh;
 }
 
 .login{
@@ -46,4 +44,20 @@ label{
     text-align: center;
     font-size: 20px;
     font-weight: bold;
+}
+
+input:focus{
+    outline: 0;
+}
+
+input[type="submit"]{
+    transition: 0.7s;
+    background-color: cornflowerblue;
+    color: white;
+    text-shadow: 0 0 2px black;
+}
+
+input[type="submit"]:hover{   
+    background-color:rgb(37, 107, 237);
+    color: rgb(222, 222, 222);
 }
