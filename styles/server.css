@@ -36,12 +36,12 @@ body {
 }
 
 .button-container {
-    margin-bottom: 220%;
+    margin-bottom: 90%;
 }
 
-.button {
+.button1 {
     display: block;
-    width: 100%;
+    width: 50%;
     padding: 10px 20px;
     font-size: 10px;
     margin-bottom: 10px;
@@ -49,11 +49,16 @@ body {
     color: #fff;
     border: none;
     cursor: pointer;
+    background-image: url('../assets/boton-agregar.png');
+    background-size: 20px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: 10px center; /* Alinea el icono al centro verticalmente */
+    padding-left: 40px;
 }
 
 .button2 {
     display: block;
-    width: 100%;
+    width: 50%;
     padding: 10px 20px;
     font-size: 10px;
     margin-bottom: 10px;
@@ -61,6 +66,28 @@ body {
     color: #fff;
     border: none;
     cursor: pointer;
+    background-image: url('../assets/icono-de-brujula.png');
+    background-size: 20px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: 10px center; /* Alinea el icono al centro verticalmente */
+    padding-left: 40px;
+}
+
+.button3 {
+    display: block;
+    width: 50%;
+    padding: 10px 20px;
+    font-size: 10px;
+    margin-bottom: 10px;
+    background-color: purple;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    background-image: url('../assets/usuario.png');
+    background-size: 20px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: 10px center; /* Alinea el icono al centro verticalmente */
+    padding-left: 40px;
 }
 
 .button:last-child {
