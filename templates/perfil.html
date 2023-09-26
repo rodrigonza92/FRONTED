@@ -3,31 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/perfil.css">
     <title>Mi Perfil</title>
 </head>
 <body>
     <div class="perfil-container">
         <div class="title-perfil">
-            <h1>Perfil</h1>
-            <a href="">Cerrar</a>
+            <h1>Mi perfil</h1>
+            <a class="close-perfil" href="">Cerrar</a>
         </div>
         <div class="head-perfil">
-            <div class="img-perfil">
-                <img src="../images/perfil.png" alt="">
-            </div>
-            <div class="info-perfil">
-                <h2>Nombre de usuario</h2>
-                <p>Nombre</p>
-                <p>Apellido</p>
-                <p>Correo</p>
-                <p>Fecha de nacimiento</p>
-            </div>
+            <img src="../images/perfil.png" alt="">
+            <h2>nombre de usuario</h2>
+        </div>
+        <div class="info-perfil">
+            <p>Nombre de usuario</p>
+            <p>Nombre</p>
+            <p>Apellido</p>
+            <p>Correo</p>
+            <p>Fecha de nacimiento</p>
         </div>
         <div class="divisor"></div>
 
         <div class="change-password">
-            <button type="button">Cambiar contraseña</button>
+            <button class="cambiar-pass-btn" type="button">Cambiar contraseña</button>
         </div>
+
+        <dialog class="change-pass-modal">
+            <form action="" class="change-password-form">
+                <label for="old-password">Contraseña actual</label><br>
+                <input type="password" name="old-password" required><br>
+                <label for="new-password">Nueva contraseña</label><br>
+                <input type="password" name="new-password" required><br>
+                <label for="confirm-password">Confirmar contraseña</label><br>
+                <input type="password" name="confirm-password" required><br>
+                <button type="submit">Cambiar contraseña</button>
+            </form>
+        </dialog>
 
     </div>
     
