@@ -1,4 +1,5 @@
 const form = document.querySelector('.registration');
+const dialog = document.querySelector('#dialog')
 
 const API_URL = 'http://127.0.0.1:5000/users/';
 
@@ -32,33 +33,40 @@ const register = () => {
         if (!response.ok) {
         throw new Error('Network response was not ok');
         }else{
-            window.location.href = "http://127.0.0.1:5500/templates/login.html";
+            dialog.showModal();
         }
         return response.json();
+        
     })
 }
 
-
-const getUsers = () => {
-    fetch(API_URL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  };
+const acceptButton = document.querySelector('.btn-accept');
+acceptButton.addEventListener('click', () => {
+    dialog.close();
+    window.location.href = "http://127.0.0.1:5500/templates/login.html";
+});
 
 
-window.addEventListener('load', getUsers);
+// const getUsers = () => {
+//     fetch(API_URL, {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     })
+//       .then(response => {
+//         if (!response.ok) {
+//           throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//       })
+//       .then(data => {
+//         console.log(data);
+//       })
+//       .catch(error => {
+//         console.error('Error:', error);
+//       });
+//   };
+
+
+// window.addEventListener('load', getUsers);
