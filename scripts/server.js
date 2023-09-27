@@ -1,5 +1,8 @@
 const principal = document.querySelector('.contenido-principal');
 const serversAdheridos = document.querySelector('.servers-adheridos');
+const addServModal = document.querySelector('.add-server-modal');
+
+const USER_ID = 6;
 
 const getServers = async () => {
     const API_URL = 'http://127.0.0.1:5000/servers/';
@@ -30,7 +33,7 @@ const main = () => {
             
   
     }else {
-        console.log('no hay nada');
+        principal.innerHTML = ''
     }
 }
 
@@ -48,16 +51,32 @@ const explorar = async () => {
                     <h3>${server.nombre}</h3>
                     <p>${server.descripcion}</p>
                 </div>
-                <button class="btn btn-primario">Unirse</button>
+                <button class="btn-add-default-server" value="${server.nombre}">Unirse</button>
             </div>
         `
+        const addDefaultServer = document.querySelectorAll('.btn-add-default-server');
+        addDefaultServer.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                serversAdheridos.innerHTML += `
+            <button class="show-channels-panel" >${btn.value}</button>
+            `
+            principal.innerHTML = ''
+            });
+        })
+
     })
+
+
 
 
     // principal.innerHTML =+ `
     //     <h2> Elige un servidor </h2>
     //     <p> Explora los servidores a los que puedes unirte </p>`
     //     console.log(ver);
+}
+
+const añadirServidor = (id_usuario) => {
+    
 }
 
 const prueba = () => {
