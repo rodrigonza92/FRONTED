@@ -9,18 +9,20 @@
 </head>
 <body>
     <div class="container">
-        <form action="" class="login">
+        <form action="" class="login" id="loginForm">
             <p class="title">Iniciar Sesion</p>
             <label for="">Correo Electronico</label><br>
-            <input type="text" name="mail" required><br>
+            <input type="text" id="email" name="email" required><br>
 
             <label for="">Contraseña</label><br>
-            <input type="password" name="passwd" required><br>
+            <input type="password" id="password" name="password" required><br>
             
             <input type="submit" value="Confirmar"><br>
     
             <label>¿No tiene una cuenta? <a href="../templates/registration.html">Registrarse</a></label>
         </form>
     </div>
+    
+    <script src="../scripts/login.js"></script>
 </body>
 </html>
