@@ -48,14 +48,14 @@ const displayPerfil = async (id) => {
                 <p>Nombre de usuario:</p>
                 <p>${data.username}</p>
             </div>
-            <button type="button" class="btn-edit">Editar</button>
+            <button type="button" value="username" class="btn-edit">Editar</button>
         </div>
         <div class="item">
             <div class="item-info">
                 <p>Nombre:</p>
                 <p>${data.first_name}</p>
             </div>
-            <button type="button" class="btn-edit">Editar</button>
+            <button type="button" value="first_name" class="btn-edit">Editar</button>
         </div>
         <div class="item">
             <div class="item-info">
@@ -74,6 +74,12 @@ const displayPerfil = async (id) => {
             
     </div>
     `
+    const botonEdit = document.querySelectorAll('.btn-edit');
+    botonEdit.forEach(boton => {
+        boton.addEventListener('click', () => {
+            console.log(boton.value);
+        })
+    })
 }
 
 window.addEventListener('load', displayPerfil(6));
