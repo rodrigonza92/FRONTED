@@ -1,8 +1,10 @@
 const principal = document.querySelector('.contenido-principal');
 const serversAdheridos = document.querySelector('.servers-adheridos');
 const addServModal = document.querySelector('.add-server-modal');
+const addServBtn = document.querySelector('.btn-add-servidor');
+const addSerForm = document.querySelector('.add-server-form');
 
-const USER_ID = 6;
+const USER_ID = 1;
 
 const getServers = async () => {
     const API_URL = 'http://127.0.0.1:5000/servers/';
@@ -23,6 +25,25 @@ const getServers = async () => {
     } catch (error) {
         console.error('Error al obtener los servidores:', error);
     }
+}
+
+const postServer =  (server) => {
+    fetch('http://127.0.0.1:5000/servers/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(server),
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }else{
+            addServModal.close();
+        }
+        return response.json();
+        
+    })
 }
 
 const main = () => {
@@ -66,23 +87,37 @@ const explorar = async () => {
 
     })
 
-
-
-
-    // principal.innerHTML =+ `
-    //     <h2> Elige un servidor </h2>
-    //     <p> Explora los servidores a los que puedes unirte </p>`
-    //     console.log(ver);
 }
 
-const añadirServidor = (id_usuario) => {
-    
-}
+const añadirServidor = () => {
+    addServBtn.addEventListener('click', () => {
+        addServModal.showModal();
+        addSerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(addSerForm);
+            const server = Object.fromEntries(formData.entries());
+            const nombre = server.nombre;
+            const descripcion = server.descripcion;
 
-const prueba = () => {
-    console.log('prueba');
-}
 
+            const id_user = USER_ID;
+            const data = {
+                nombre,
+                descripcion,
+                id_user
+            }
+            console.log(data);
+
+            postServer(data);
+            // explorar();
+            addServModal.close();
+
+        })
+    })
+
+}
 
 
 main();
+añadirServidor();
