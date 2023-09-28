@@ -92,7 +92,7 @@ const main = () => {
         }else{
             data.map((server) => {
                 serversAdheridos.innerHTML += `
-                <button class="show-channels-panel" >${server.nombre}</button>
+                <button onClick="displayCanales()" class="show-channels-panel" >${server.nombre}</button>
                 `
             })
         }
@@ -190,3 +190,38 @@ const añadirServidor = () => {
 
 main();
 añadirServidor();
+
+// CANALES
+
+const getCanales = async () => {
+    const API_URL = 'http://127.0.0.1:5000/channels/';
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('La solicitud no se completó correctamente.');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener los servidores:', error);
+    }
+}
+
+const displayCanales = async () => {
+    const canalesContainer = document.querySelector('.canales-container');
+    const canales = await getCanales();
+    canales.forEach((canal) => {
+        canalesContainer.innerHTML += `
+        <button class="channel-btn" data-id="${canal.id_channel}">${canal.nombre}</button>
+        `
+    
+    })
+}
+
