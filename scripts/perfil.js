@@ -38,6 +38,7 @@ const updateUserField = async (id, field, value) => {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+      
         return data;
     } catch (error) {
         console.error('Error:', error);
@@ -47,28 +48,6 @@ const updateUserField = async (id, field, value) => {
 cambiarPassBtn.addEventListener('click', () => {
     editModal.showModal();
 });
-
-// // Mostrar el formulario de edición al hacer clic en el botón "Editar"
-// const botonEdit = document.querySelectorAll('.btn-edit');
-// botonEdit.forEach(boton => {
-//     boton.addEventListener('click', () => {
-//         const fieldToEdit = boton.value;
-//         document.getElementById('edit-field').value = fieldToEdit;
-//         document.getElementById('edit-value').value = '';
-//         editForm.addEventListener('submit', async (e) => {
-//             e.preventDefault();
-//             const newValue = document.getElementById('edit-value').value;
-//             await updateUserField(id, fieldToEdit, newValue);
-//             editModal.close();
-//             // Volver a cargar el perfil después de la edición
-//             await displayPerfil(id);
-//         });
-//         document.querySelector('.cancel-edit').addEventListener('click', () => {
-//             editModal.close();
-//         });
-//         editModal.showModal();
-//     });
-// });
 
 const displayPerfil = async (id) => {
     let data = await getUser(id);
