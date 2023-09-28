@@ -1,133 +1,115 @@
 const cambiarPassBtn = document.querySelector('.cambiar-pass-btn');
-const dialog = document.querySelector('.change-pass-modal');
+const editModal = document.querySelector('.edit-modal');
+const editForm = document.querySelector('.edit-form');
 const perfil = document.querySelector('.perfil');
 
-// Funcion para obtener los datos del usuario
-const getUser = (id) => {
+// Función para obtener los datos del usuario
+const getUser = async (id) => {
     const API_URL = `http://127.0.0.1:5000/users/${id}`;
-    const response = fetch(API_URL, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => {
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         if (!response.ok) {
-        throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok');
         }
-        return response.json();
-    })
-    .then(data => {
+        const data = await response.json();
         return data;
-    })
-    .catch((error) => {
+    } catch (error) {
         console.error('Error:', error);
-    });
-    return response;
-  };
+    }
+};
 
+// Función para actualizar un campo del usuario
+const updateUserField = async (id, field, value) => {
+    const API_URL = `http://127.0.0.1:5000/users/${id}`;
+    try {
+        const response = await fetch(API_URL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ [field]: value }),
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
 
 cambiarPassBtn.addEventListener('click', () => {
-    dialog.showModal();
-}
-);
+    editModal.showModal();
+});
+
+// Mostrar el formulario de edición al hacer clic en el botón "Editar"
+const botonEdit = document.querySelectorAll('.btn-edit');
+botonEdit.forEach(boton => {
+    boton.addEventListener('click', () => {
+        const fieldToEdit = boton.value;
+        document.getElementById('edit-field').value = fieldToEdit;
+        document.getElementById('edit-value').value = '';
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newValue = document.getElementById('edit-value').value;
+            await updateUserField(id, fieldToEdit, newValue);
+            editModal.close();
+            // Volver a cargar el perfil después de la edición
+            await displayPerfil(id);
+        });
+        document.querySelector('.cancel-edit').addEventListener('click', () => {
+            editModal.close();
+        });
+        editModal.showModal();
+    });
+});
 
 const displayPerfil = async (id) => {
     let data = await getUser(id);
-
-    console.log(data, "Lata data que se encuentra en display perfil");
-
     perfil.innerHTML = `
-    <div class="head-perfil">
-        <img src="../assets/usuario.png" alt="">
-        <h2>${data.first_name} ${data.last_name}</h2>
-    </div>
-    <div class="info-perfil">
-        <div class="item">
+        <div class="head-perfil">
+            <h2>${data.first_name} ${data.last_name}</h2>
+        </div>
+        <div class="info-perfil">
+            <div class="item">
             <div class="item-info">
                 <p>Nombre de usuario:</p>
                 <p>${data.username}</p>
             </div>
-            <button type="button" data-field="username" value="username" class="btn-edit">Editar</button>
-        </div>
-        <div class="item">
+            <button type="button" value="username" class="btn-edit">Editar</button>
+            </div>
+            <div class="item">
             <div class="item-info">
                 <p>Nombre:</p>
                 <p>${data.first_name}</p>
             </div>
-            <button type="button" data-field="first_name" value="first_name" class="btn-edit">Editar</button>
-        </div>
-        <div class="item">
+            <button type="button" value="first_name" class="btn-edit">Editar</button>
+            </div>
+            <div class="item">
             <div class="item-info">
                 <p>Apellido:</p>
                 <p>${data.last_name}</p>
             </div>
-            <button type="button" data-field="last_name" value="last_name" class="btn-edit">Editar</button>
-        </div>
-        <div class="item">
+            <button type="button" value="last_name" class="btn-edit">Editar</button>
+            </div>
+            <div class="item">
             <div class="item-info">
                 <p>Correo electronico:</p>
                 <p>${data.email}</p>
             </div>
-            <button type="button" data-field="email" class="btn-edit">Editar</button>
-        </div>
+            <button type="button" value="email" class="btn-edit">Editar</button>
+            </div>
             
-    </div>
-    `
-    perfil.innerHTML = `
-    <!-- ... (código para mostrar el perfil) ... -->
+        </div>
     `;
+};
 
-    const botonEdit = document.querySelectorAll('.btn-edit');
-    botonEdit.forEach(boton => {
-        boton.addEventListener('click', () => {
-            const fieldToEdit = boton.getAttribute('data-field');
-            const valorActual = data[fieldToEdit];
-            editedValueInput.value = valorActual;
-            editedValueInput.dataset.field = fieldToEdit; // Almacena el campo que se va a editar
-            editModal.style.display = 'block';
-        });
-    });
-
-    // const botonEdit = document.querySelectorAll('.btn-edit');
-    // botonEdit.forEach(boton => {
-    //     boton.addEventListener('click', () => {
-    //         console.log(boton.value);
-    //     })
-    // })
-}
-
-// saveEditBtn.addEventListener('click', async () => {
-//     const fieldToEdit = editedValueInput.dataset.field;
-//     const nuevoValor = editedValueInput.value;
-    
-//     // Realiza la solicitud PUT para actualizar el valor en la API
-//     const userId = 1; // Supongamos que tienes el ID del usuario
-//     const API_URL = `http://127.0.0.1:5000/users/${userId}`;
-    
-//     try {
-//         const response = await fetch(API_URL, {
-//             method: 'PUT', // Utiliza el método PUT para actualizar
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({ [fieldToEdit]: nuevoValor }), // Actualiza el campo específico
-//         });
-    
-//         if (!response.ok) {
-//             throw new Error('No se pudo actualizar el valor');
-//         }
-    
-//         // Actualiza la vista con el nuevo valor
-//         // Por ejemplo, puedes actualizar el contenido del elemento <p>
-    
-//         // Oculta la ventana emergente
-//         editModal.style.display = 'none';
-//     } catch (error) {
-//         console.error('Error al guardar los cambios:', error);
-//     }
-// });
-
-
-window.addEventListener('load', displayPerfil(1));
-console.log('despues de la carga');
+window.addEventListener('load', () => {
+    displayPerfil(1);
+});

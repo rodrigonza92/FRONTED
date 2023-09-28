@@ -12,18 +12,24 @@
         <a class="close-perfil" href="">Cerrar</a>
     </div>
     <div class="perfil-container">
-        
         <div class="perfil">
-            
         </div>
-        
         <div class="divisor"></div>
-
         <div class="change-password">
             <button class="cambiar-pass-btn" type="button">Cambiar contraseña</button>
         </div>
+        <dialog class="edit-modal">
+            <form class="edit-form">
+                <label for="edit-field">Editar campo:</label>
+                <input type="text" id="edit-field" disabled>
+                <label for="edit-value">Nuevo valor:</label>
+                <input type="text" id="edit-value" required>
+                <button type="submit">Guardar</button>
+                <button type="button" class="cancel-edit">Cancelar</button>
+            </form>
+        </dialog>
 
-        <dialog class="change-pass-modal">
+        <!-- <dialog class="change-pass-modal">
             <form action="" class="change-password-form">
                 <label for="old-password">Contraseña actual</label><br>
                 <input type="password" name="old-password" required><br>
@@ -33,7 +39,7 @@
                 <input type="password" name="confirm-password" required><br>
                 <button type="submit">Cambiar contraseña</button>
             </form>
-        </dialog>
+        </dialog> -->
 
     </div>
 
