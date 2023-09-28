@@ -1,0 +1,110 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: #355571;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    max-width: 1800px;
+    height: 90vh;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: grey;
+    border: 1px solid #ffffff;
+    box-shadow:  0px 1px 5px black;
+}
+
+.section1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.opciones {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contenido-principal {
+    flex: 1;
+    width: 80%;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: orange;
+}
+
+.button-container {
+    margin-bottom: 90%;
+}
+
+.btn-add-servidor {
+    display: block;
+    width: 50%;
+    padding: 10px 20px;
+    font-size: 10px;
+    margin-bottom: 10px;
+    background-color: darkgoldenrod;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    background-image: url('../assets/boton-agregar.png');
+    background-size: 25px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: 10px center; /* Alinea el icono al centro verticalmente */
+    padding-left: 40px;
+}
+
+.btn-explorar {
+    display: block;
+    width: 50%;
+    padding: 10px 20px;
+    font-size: 10px;
+    margin-bottom: 10px;
+    background-color: darkgoldenrod;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    background-image: url('../assets/icono-de-brujula.png');
+    background-size: 25px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: 10px center; /* Alinea el icono al centro verticalmente */
+    padding-left: 40px;
+}
+
+.button3 {
+    display: block;
+    width: 50%;
+    padding: 10px 20px;
+    font-size: 10px;
+    margin-bottom: 10px;
+    background-color: darkgoldenrod;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    background-image: url('../assets/usuario.png');
+    background-size: 25px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: 10px center; /* Alinea el icono al centro verticalmente */
+    padding-left: 40px;
+}
+
+.button:last-child {
+    margin-bottom: 0;
+}
+
+.servers-adheridos {
+    display: flex;
+    flex-direction: column;
+}
