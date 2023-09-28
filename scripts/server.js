@@ -46,16 +46,54 @@ const postServer =  (server) => {
     })
 }
 
-const main = () => {
-    if(serversAdheridos.childElementCount === 0){
-        principal.innerHTML = `
-            <h2> Aun no te has unido a un servidor </h2>
-            <p> Para unirte a un servidor, debes tener una invitacion </p>`
-            
-  
-    }else {
-        principal.innerHTML = ''
+const serversPorUser = async (USER_ID) => {
+    const API_URL = `http://127.0.0.1:5000/servers/added/${USER_ID}`;
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('La solicitud no se completó correctamente.');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener los servidores:', error);
     }
+}
+
+const refreshServers = () => {
+    serversPorUser(USER_ID).then((data) => {
+        serversAdheridos.innerHTML = '';
+        data.map((server) => {
+            serversAdheridos.innerHTML += `
+            <button class="show-channels-panel" >${server.nombre}</button>
+            `
+        })
+    })
+}
+
+
+const main = () => {
+    serversPorUser(USER_ID).then((data) => {
+        if(data.length === 0){
+            principal.innerHTML = `
+                <h2> Aun no te has unido a un servidor </h2>
+                <p> Para unirte a un servidor, debes tener una invitacion </p>`
+
+        }else{
+            data.map((server) => {
+                serversAdheridos.innerHTML += `
+                <button class="show-channels-panel" >${server.nombre}</button>
+                `
+            })
+        }
+    })
 }
 
 const explorar = async () => {
@@ -110,7 +148,7 @@ const añadirServidor = () => {
             console.log(data);
 
             postServer(data);
-            // explorar();
+            refreshServers();
             addServModal.close();
 
         })
