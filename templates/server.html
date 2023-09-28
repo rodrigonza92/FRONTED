@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios</title>
+    <link rel="stylesheet" href="../styles/server.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container">
+        <div class="section1">
+            <div class="servers-section">
+               <div class="servers-adheridos">
+                </div>
+                <div class="opciones">
+                    <button class="btn-add-servidor">Añadir Servidor</button>
+                    <button onclick="explorar()" class="btn-explorar">Explorar</button>
+                </div> 
+            </div>
+            
+            <button class="button3">Usuario</button>
+        </div>
+        <div class="canales">
+            <!-- Contenido de la segunda sección -->
+        </div>
+        <div class="contenido-principal">
+            <!-- Contenido de la segunda sección -->
+        </div>
+    </div>
+
+    <dialog class="add-server-modal">
+        <h3>Crear servidor</h3>
+        <form class="add-server-form">
+            <label for="nombre">Ingresa el nombre del servidor</label>
+            <input name="nombre" type="text" class="server-name" placeholder="Nombre del servidor">
+            <label for="descripcion">Ingresa una descripcion</label>
+            <input name="descripcion" type="text" class="server-descripcion">
+            <button type="submit" class="submit-crear-servidor">Crear</button>
+        </form>
+        
+    </dialog>
+
+    <script src="../scripts/server.js"></script>
+</body>
+</html>
