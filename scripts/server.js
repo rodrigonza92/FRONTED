@@ -74,6 +74,9 @@ const refreshServers = () => {
             serversAdheridos.innerHTML += `
             <button class="show-channels-panel" >${server.nombre}</button>
             `
+
+            
+
         })
     })
 }
@@ -110,16 +113,44 @@ const explorar = async () => {
                     <h3>${server.nombre}</h3>
                     <p>${server.descripcion}</p>
                 </div>
-                <button class="btn-add-default-server" value="${server.nombre}">Unirse</button>
+                <button class="btn-add-default-server" data-id="${server.id_server}" value="${server.nombre}">Unirse</button>
             </div>
         `
         const addDefaultServer = document.querySelectorAll('.btn-add-default-server');
         addDefaultServer.forEach((btn) => {
             btn.addEventListener('click', () => {
-                serversAdheridos.innerHTML += `
-            <button class="show-channels-panel" >${btn.value}</button>
-            `
-            principal.innerHTML = ''
+
+            const id_server = btn.dataset.id;
+            const id_user = USER_ID;
+            const data = {
+                id_server,
+                id_user
+            }
+            console.log(data);
+
+            fetch('http://127.0.0.1:5000/servers/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }else{
+                    principal.innerHTML = ''
+                    refreshServers();
+                }
+                return response.json();
+                
+            })
+
+
+            //     serversAdheridos.innerHTML += `
+            // <button class="show-channels-panel" >${btn.value}</button>
+            // `
+            
             });
         })
 
