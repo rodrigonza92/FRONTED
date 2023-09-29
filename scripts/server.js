@@ -217,12 +217,17 @@ const getCanales = async () => {
 const displayCanales = async (test_id_server) => {
     const canalesContainer = document.querySelector('.canales-container');
     const canales = await getCanales();
+
+    const btnAñadir = document.querySelector('.add-canal-container');
+    btnAñadir.innerHTML = '';
+    btnAñadir.innerHTML = `<button onclick="openModal(${test_id_server})" type="button" class="btn-add-canal"> Añadir canal</button>`;
+
     console.log(canales);
     canalesContainer.innerHTML = '';
     canales.forEach((canal) => {
         if(test_id_server === canal.id_server){
             canalesContainer.innerHTML += `
-            <button onlcic class="channel-btn" data-id="${canal.id_channel}">${canal.nombre}</button>
+            <button onclick="mostrarMensajes(${canal.id_channel})" class="channel-btn" data-id="${canal.id_channel}">${canal.nombre}</button>
             `
         }
         
@@ -230,3 +235,96 @@ const displayCanales = async (test_id_server) => {
     })
 }
 
+
+//  MENSAJES
+// Al ingresar al canal ==>>
+const mostrarMensajes = (id_channel) => {
+    
+    const msgForm = document.querySelector('.mensaje-form');
+    msgForm.innerHTML = `
+    <form class="form-mensaje">
+        <input name="mensaje" type="text" class="mensaje-input" placeholder="Escribe un mensaje">
+        <button  onclick="enviarMensaje(${id_channel})" type="submit"  class="mensaje-submit">Enviar</button>
+    </form>`
+
+    
+
+    refreshMensajes(id_channel);
+    
+
+}
+
+const refreshMensajes = (id_channel) => {
+    fetch('http://127.0.0.1:5000/messages/', {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const mensajes = document.querySelector('.mensajes');
+        mensajes.innerHTML = '';
+        data.map((mensaje) => {
+            if(id_channel === mensaje.id_channel){
+                
+                mensajes.innerHTML += 
+                `<div class="mensaje">
+                    <div class="mensaje-info">
+                        <div class="mensaje-info-usuario">
+                            <p class="mensaje-info-usuario-nombre">${mensaje.id_user} cambiar a nombre de usuario</p>
+                        </div>
+                        <p class="mensaje-info-hora">${mensaje.fecha}</p>
+                    </div>
+                    <p class="mensaje-contenido">${mensaje.mensaje}</p>
+                </div>`
+            }
+        })
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Al enviar un mensaje ==>>
+
+const enviarMensaje = (id_channel) => {
+    const msgForm = document.querySelector('.form-mensaje');
+    msgForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const mensaje = document.querySelector('.mensaje-input');
+
+        const data = {
+            id_user: USER_ID,
+            id_channel: id_channel,
+            mensaje: mensaje.value,
+            fecha: new Date().toLocaleString()
+        }
+
+        console.log(data);
+        
+        fetch('http://127.0.0.1:5000/messages/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        })
+        .then(response => {
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
+            }else{
+                // refreshMensajes(id_channel);
+                console.log('exitoso');
+            }
+            return response.json();
+            
+        })
+
+    })
+}
