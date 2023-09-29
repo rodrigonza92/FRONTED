@@ -306,7 +306,6 @@ const añadirCanal = () => {
             addChanModal.close();
         })
     })
-
 }
 
 
