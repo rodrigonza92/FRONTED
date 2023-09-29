@@ -3,8 +3,14 @@ const serversAdheridos = document.querySelector('.servers-adheridos');
 const addServModal = document.querySelector('.add-server-modal');
 const addServBtn = document.querySelector('.btn-add-servidor');
 const addSerForm = document.querySelector('.add-server-form');
+const channelsAdheridos = document.querySelector('.channels-adheridos');
+const addChanModal = document.querySelector('.add-channel-modal');
+const addChanBtn = document.querySelector('.btn-add-canal');
+const addChanForm = document.querySelector('.add-channel-form');
+
 
 const USER_ID = 1;
+let SERVER_ID;
 
 const getServers = async () => {
     const API_URL = 'http://127.0.0.1:5000/servers/';
@@ -72,11 +78,8 @@ const refreshServers = () => {
         serversAdheridos.innerHTML = '';
         data.map((server) => {
             serversAdheridos.innerHTML += `
-            <button class="show-channels-panel" >${server.nombre}</button>
+            <button data-idServer="${server.id_server}" class="show-channels-panel" >${server.nombre}</button>
             `
-
-            
-
         })
     })
 }
@@ -92,7 +95,7 @@ const main = () => {
         }else{
             data.map((server) => {
                 serversAdheridos.innerHTML += `
-                <button class="show-channels-panel" >${server.nombre}</button>
+                <button onClick="displayCanales(${server.id_server})" class="show-channels-panel" >${server.nombre}</button>
                 `
             })
         }
@@ -169,7 +172,6 @@ const añadirServidor = () => {
             const nombre = server.nombre;
             const descripcion = server.descripcion;
 
-
             const id_user = USER_ID;
             const data = {
                 nombre,
@@ -188,5 +190,219 @@ const añadirServidor = () => {
 }
 
 
+// CANALES
+
+const getCanales = async () => {
+    const API_URL = 'http://127.0.0.1:5000/channels/';
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('La solicitud no se completó correctamente.');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener los canales:', error);
+    }
+}
+
+const displayCanales = async (SERVER_ID) => {
+    const canalesContainer = document.querySelector('.canales-container');
+    const canales = await getCanales();
+
+    const btnAñadir = document.querySelector('.add-canal-container');
+    btnAñadir.innerHTML = '';
+    btnAñadir.innerHTML = `<button onclick="openModal(${SERVER_ID})" type="button" class="btn-add-canal"> Añadir canal</button>`;
+
+    //console.log(canales);
+    canalesContainer.innerHTML = '';
+    canales.forEach((canal) => {
+        if (SERVER_ID === canal.id_server) {
+            canalesContainer.innerHTML += `
+            <button onclick="mostrarMensajes(${canal.id_channel})" class="channel-btn" data-id="${canal.id_channel}">${canal.nombre}</button>
+            `
+        }
+    })
+}
+
+const channelsPorServer = async (SERVER_ID) => {
+    const API_URL = `http://127.0.0.1:5000/channels/added/${SERVER_ID}`;
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('La solicitud no se completó correctamente.');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener los canales:', error);
+    }
+}
+
+const postChannel =  (channel) => {
+    fetch('http://127.0.0.1:5000/channels/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(channel),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }else{
+            addChanModal.close();
+        }
+        return response.json();
+        
+    })
+}
+
+const refreshChannels = () => {
+    channelsPorServer(SERVER_ID).then((data) => {
+        channelsAdheridos.innerHTML = '';
+        data.map((channel) => {
+            channelsAdheridos.innerHTML += `
+            <button class="show-channels-panel" >${channel.nombre}</button>
+            `
+        })
+    })
+}
+
+const añadirCanal = () => {
+    addChanBtn.addEventListener('click', () => {
+        addChanModal.showModal();
+        addChanForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(addChanForm);
+            const channel = Object.fromEntries(formData.entries());
+            const nombre = channel.nombre;
+
+
+            const id_server = SERVER_ID;
+            const data = {
+                nombre,
+                id_server
+            }
+            //console.log(data);
+
+            postChannel(data);
+            refreshChannels();
+            addChanModal.close();
+        })
+    })
+}
+
+
+//  MENSAJES
+// Al ingresar al canal ==>>
+const mostrarMensajes = (id_channel) => {
+    
+    const msgForm = document.querySelector('.mensaje-form');
+    msgForm.innerHTML = `
+    <form class="form-mensaje">
+        <input name="mensaje" type="text" class="mensaje-input" placeholder="Escribe un mensaje">
+        <button  onclick="enviarMensaje(${id_channel})" type="submit"  class="mensaje-submit">Enviar</button>
+    </form>`
+
+    
+
+    refreshMensajes(id_channel);
+    
+
+}
+
+const refreshMensajes = (id_channel) => {
+    fetch('http://127.0.0.1:5000/messages/', {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const mensajes = document.querySelector('.mensajes');
+        mensajes.innerHTML = '';
+        data.map((mensaje) => {
+            if(id_channel === mensaje.id_channel){
+                
+                mensajes.innerHTML += 
+                `<div class="mensaje">
+                    <div class="mensaje-info">
+                        <div class="mensaje-info-usuario">
+                            <p class="mensaje-info-usuario-nombre">${mensaje.id_user} cambiar a nombre de usuario</p>
+                        </div>
+                        <p class="mensaje-info-hora">${mensaje.fecha}</p>
+                    </div>
+                    <p class="mensaje-contenido">${mensaje.mensaje}</p>
+                </div>`
+            }
+        })
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Al enviar un mensaje ==>>
+
+const enviarMensaje = (id_channel) => {
+    const msgForm = document.querySelector('.form-mensaje');
+    msgForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const mensaje = document.querySelector('.mensaje-input');
+
+        const data = {
+            id_user: USER_ID,
+            id_channel: id_channel,
+            mensaje: mensaje.value,
+            fecha: new Date().toLocaleString()
+        }
+
+        console.log(data);
+        
+        fetch('http://127.0.0.1:5000/messages/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        })
+        .then(response => {
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
+            }else{
+                // refreshMensajes(id_channel);
+                console.log('exitoso');
+            }
+            return response.json();
+            
+        })
+
+    })
+}
+
+
 main();
 añadirServidor();
+añadirCanal();
