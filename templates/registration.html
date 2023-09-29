@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="../styles/registration.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container">
+        <form action="" class="registration">
+            <p class="title">Crear una cuenta</p>
+            <label>Correo Electronico</label><br>
+            <input type="email" name="email" class="input-email" required><br>
+            <label for="username">Nombre de usuario</label><br>
+            <input type="text" name="username" class="username-input" required><br>
+            <label for="firstname">Nombre</label><br>
+            <input type="text" name="firstname" required><br>
+            <label for="lastname">Apellido</label><br>
+            <input type="text" name="lastname" required><br>
+            <label for="password">Contraseña</label><br>
+            <input type="password" name="password" required><br>
+            <label for="birthday">Fecha de nacimiento</label><br>
+            <input type="date" name="birthday" required><br>
+
+            <button type="submit" class="btn-submit">Submit</button>
+        </form>
+    </div>
+    
+    <dialog id="dialog">
+        <p>Usuario creado con exito</p>
+        <button class="btn-accept">Aceptar</button>
+    </dialog>
+
+    <script src="../scripts/registration.js"></script>
+</body>
+</html>
