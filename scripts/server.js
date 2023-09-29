@@ -92,7 +92,7 @@ const main = () => {
         }else{
             data.map((server) => {
                 serversAdheridos.innerHTML += `
-                <button onClick="displayCanales()" class="show-channels-panel" >${server.nombre}</button>
+                <button onClick="displayCanales(${server.id_server})" class="show-channels-panel" >${server.nombre}</button>
                 `
             })
         }
@@ -214,14 +214,19 @@ const getCanales = async () => {
     }
 }
 
-const displayCanales = async () => {
+const displayCanales = async (test_id_server) => {
     const canalesContainer = document.querySelector('.canales-container');
     const canales = await getCanales();
+    console.log(canales);
+    canalesContainer.innerHTML = '';
     canales.forEach((canal) => {
-        canalesContainer.innerHTML += `
-        <button class="channel-btn" data-id="${canal.id_channel}">${canal.nombre}</button>
-        `
-    
+        if(test_id_server === canal.id_server){
+            canalesContainer.innerHTML += `
+            <button onlcic class="channel-btn" data-id="${canal.id_channel}">${canal.nombre}</button>
+            `
+        }
+        
+        
     })
 }
 
