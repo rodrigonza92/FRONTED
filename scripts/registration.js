@@ -88,27 +88,3 @@ acceptButton.addEventListener('click', () => {
     window.location.href = "http://127.0.0.1:5500/templates/login.html";
 });
 
-
-// const getUsers = () => {
-//     fetch(API_URL, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     })
-//       .then(response => {
-//         if (!response.ok) {
-//           throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//       })
-//       .then(data => {
-//         console.log(data);
-//       })
-//       .catch(error => {
-//         console.error('Error:', error);
-//       });
-//   };
-
-
-// window.addEventListener('load', getUsers);
