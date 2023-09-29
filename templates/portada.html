@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/portada.css">
+    <title>Portada Discord</title>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>Bienvenidos a CodersChat</h1>
+            <p>Chatea, colabora y conectate con tus amigos.</p>
+            <button class="join-button" id="join-button">Unete a CodersChat</button>
+            <script>
+                document.getElementById("join-button").addEventListener("click", function() {
+                    // Redirige a la página de destino
+                    window.location.href = "http://127.0.0.1:5500/templates/registration.html";
+                });
+            </script>
+        </div>
+        <div class="right-panel">
+            <div class="login-box">
+                <h2>Login</h2>
+                <!-- <input type="text" placeholder="Username or Email">
+                <input type="password" placeholder="Password"> -->
+                <button class="login-button" id="login-button">Acceder</button>
+                <script>
+                    document.getElementById("login-button").addEventListener("click", function() {
+                        // Redirige a la página de destino
+                        window.location.href = "http://127.0.0.1:5500/templates/login.html";
+                    });
+                </script>
+            </div>
+            <div class="register-box">
+                <h2>Aun no tienes cuenta?</h2>
+                <button class="register-button" id="register-button">Registrate</button>
+                <script>
+                    document.getElementById("register-button").addEventListener("click", function() {
+                        // Redirige a la página de destino
+                        window.location.href = "http://127.0.0.1:5500/templates/registration.html";
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

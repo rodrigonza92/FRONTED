@@ -36,10 +36,32 @@ label{
     position: relative;
     padding-bottom: 50px;
     box-shadow: 0px 1px 5px black;
+    background-image: url('../assets/portada.png');
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el fondo */
+    background-position: center; /* Centra la imagen en el fondo */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
 }
 
 .title{
     text-align: center;
-    font-size: 20px;
+    font-size: 32px;
     font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 10px 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.btn-submit{
+    background-color: #982ee9;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #fff;
+    color: #982ee9;
 }
