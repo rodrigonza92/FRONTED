@@ -41,7 +41,8 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(autenticado)
             if (autenticado) {
                 // La autenticación fue exitosa
-                alert("Inicio de sesión exitoso");
+                //alert("Inicio de sesión exitoso");
+                window.location.href = "../templates/server.html";
             } else {
                 // La autenticación falló
                 alert("Credenciales incorrectas. Inténtalo de nuevo.");
