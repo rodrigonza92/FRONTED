@@ -2,7 +2,7 @@ const principal = document.querySelector('.contenido-principal');
 const serversAdheridos = document.querySelector('.servers-adheridos');
 const addServModal = document.querySelector('.add-server-modal');
 const addServBtn = document.querySelector('.btn-add-servidor');
-const addSerForm = document.querySelector('.add-server-form');
+const addServForm = document.querySelector('.add-server-form');
 const channelsAdheridos = document.querySelector('.channels-adheridos');
 const addChanModal = document.querySelector('.add-channel-modal');
 const addChanBtn = document.querySelector('.btn-add-canal');
@@ -11,7 +11,6 @@ const perfilButton = document.getElementById('btn-usuario');
 
 const USER_ID = 1;
 let SERVER_ID;
-//let data;
 
 const getServers = async () => {
     const API_URL = 'http://127.0.0.1:5000/servers/';
@@ -35,7 +34,7 @@ const getServers = async () => {
 }
 
 const postServer = (server) => {
-    //console.log(server)
+    console.log('postServer: ',server)
     fetch('http://127.0.0.1:5000/servers/', {
         method: 'POST',
         headers: {
@@ -48,6 +47,7 @@ const postServer = (server) => {
             throw new Error('Network response was not ok');
         } else {
             addServModal.close();
+            refreshServers();
         }
         return response.json();
     })
@@ -143,7 +143,7 @@ const explorar = async () => {
                         descripcion
                     };
         
-                    console.log(data);
+                    //console.log(data);
         
                     fetch('http://127.0.0.1:5000/servers/', {
                         method: 'POST',
@@ -171,14 +171,14 @@ const explorar = async () => {
 const añadirServidor = () => {
     addServBtn.addEventListener('click', () => {
         addServModal.showModal();
-        addSerForm.addEventListener('submit', (e) => {
+        addServForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            const formData = new FormData(addSerForm);
+            const formData = new FormData(addServForm);
             const server = Object.fromEntries(formData.entries());
+            //console.log('Info server:',server)
             const nombre = server.nombre;
             const descripcion = server.descripcion;
-
             const id_user = USER_ID; //Se pasa el user id para recuperar luego los servidores que pertenecen al usuario logueado
             
             const data = {
@@ -186,11 +186,8 @@ const añadirServidor = () => {
                 descripcion,
                 id_user
             }
-
             postServer(data);
-            refreshServers();
             addServModal.close();
-
         })
     })
 
