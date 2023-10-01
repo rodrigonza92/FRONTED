@@ -114,7 +114,7 @@ const explorar = async () => {
     const ver = await getServers();
 
     principal.innerHTML = `
-        <h2> Elige un servidor </h2>
+        <h2><b> Elige un servidor </b></h2>
     `
 
     ver.map((server) => {
@@ -130,43 +130,42 @@ const explorar = async () => {
         const addDefaultServer = document.querySelectorAll('.btn-add-default-server');
         addDefaultServer.forEach((btn) => {
             btn.addEventListener('click', () => {
-
-            const id_server = btn.dataset.id;
-            const id_user = USER_ID;
-            const data = {
-                id_server,
-                id_user
-            }
-            //console.log(data);
-
-            fetch('http://127.0.0.1:5000/servers/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            })
-            .then(response => {
-                if (!response.ok) {
-                throw new Error('Network response was not ok');
-                }else{
-                    principal.innerHTML = ''
-                    refreshServers();
-                }
-                return response.json();
+                const id_server = parseInt(btn.dataset.id);
+                const serverInfo = ver.find((server) => server.id_server === id_server);
                 
-            })
-
-
-            //     serversAdheridos.innerHTML += `
-            // <button class="show-channels-panel" >${btn.value}</button>
-            // `
-            
+                if (serverInfo) {
+                    const { nombre, descripcion } = serverInfo;
+                    const id_user = USER_ID;
+                    const data = {
+                        id_server,
+                        id_user,
+                        nombre,
+                        descripcion
+                    };
+        
+                    console.log(data);
+        
+                    fetch('http://127.0.0.1:5000/servers/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        } else {
+                            principal.innerHTML = '';
+                            refreshServers();
+                        }
+                        return response.json();
+                        
+                    });
+                }
             });
-        })
-
+        });        
     })
-
 }
 
 const añadirServidor = () => {
