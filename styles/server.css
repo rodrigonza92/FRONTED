@@ -52,6 +52,11 @@ body {
     margin-bottom: 90%;
 }
 
+.mensajes {
+    max-height: 600px;
+    overflow-y: auto; 
+}
+
 .btn-add-servidor {
     display: block;
     width:100%;
@@ -97,10 +102,27 @@ body {
     border: none;
     cursor: pointer;
     background-image: url('../assets/usuario.png');
-    background-size: 25px; /* Tamaño de la imagen */
+    background-size: 25px;
     background-repeat: no-repeat;
-    background-position: 10px center; /* Alinea el icono al centro verticalmente */
+    background-position: 10px center;
     padding-left: 40px;
+}
+
+.mensaje-form {
+    display: block;
+    width: 90%;
+    padding: 10px 20px 10px;
+    font-size: 10px;
+    margin-top: 50px;
+    margin-bottom: 5px;
+    background-color: darkgoldenrod;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.mensaje-input{
+    width: 80%;
 }
 
 .button:last-child {
