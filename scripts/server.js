@@ -9,7 +9,8 @@ const addChanBtn = document.querySelector('.btn-add-canal');
 const addChanForm = document.querySelector('.add-channel-form');
 const perfilButton = document.getElementById('btn-usuario');
 
-const USER_ID = 1;
+// const USER_ID = 1;
+const USER_ID = localStorage.getItem('USER_ID');
 let SERVER_ID;
 
 const getServers = async () => {
@@ -104,9 +105,15 @@ const main = () => {
                 serversAdheridos.innerHTML += `
                 <button onClick="displayCanales(${server.id_server})" class="show-channels-panel" >${server.nombre}</button>
                 `
-            })
+            });
         }
-    })
+    });
+
+    getUser(USER_ID).then((userData) => {
+        if (userData) {
+            perfilButton.textContent = userData.username;
+        }
+    });
 }
 
 const explorar = async () => {

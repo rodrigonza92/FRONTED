@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
             userData.forEach(element => {
                 if (element.email === email && element.passwd === password) {
                     autenticado = true; // Autenticación exitosa
+                    localStorage.clear();
+                    localStorage.setItem('USER_ID', element.id_user)
                 }
             });
 
