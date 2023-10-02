@@ -390,39 +390,36 @@ const refreshMensajes = async (id_channel) => {
 // Al enviar un mensaje ==>>
 
 const enviarMensaje = (id_channel) => {
-    const msgForm = document.querySelector('.form-mensaje');
-    msgForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const mensaje = document.querySelector('.mensaje-input');
+    const mensaje = document.querySelector('.mensaje-input');
 
-        const data = {
-            id_user: USER_ID,
-            id_channel: id_channel,
-            mensaje: mensaje.value,
+    const data = {
+        id_user: USER_ID,
+        id_channel: id_channel,
+        mensaje: mensaje.value,
+    }
+
+    console.log(data);
+    
+    fetch('http://127.0.0.1:5000/messages/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        } else {
+            mensaje.value = ''; // Limpiar el campo de entrada después de enviar
+            refreshMensajes(id_channel); // Actualizar mensajes después de enviar uno nuevo
+            console.log('Mensaje enviado exitosamente');
         }
-
-        console.log(data);
-        
-        fetch('http://127.0.0.1:5000/messages/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            } else {
-                refreshMensajes(id_channel); // Actualizar mensajes después de enviar uno nuevo
-                console.log('Mensaje enviado exitosamente');
-            }
-            return response.json();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    })
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 const getUser = async (id) => {
