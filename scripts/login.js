@@ -38,10 +38,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         try {
             const autenticado = await verificarUsuario(email, password);
-            console.log(autenticado)
+            //console.log(autenticado)
             if (autenticado) {
                 // La autenticación fue exitosa
-                alert("Inicio de sesión exitoso");
+                //alert("Inicio de sesión exitoso");
+                window.location.href = "./server.html";
             } else {
                 // La autenticación falló
                 alert("Credenciales incorrectas. Inténtalo de nuevo.");

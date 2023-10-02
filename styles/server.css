@@ -94,7 +94,7 @@ body {
     border-radius: 10px;
 }
 
-.button3 {
+#btn-usuario {
     display: block;
     width: 70%;
     padding: 10px 20px;

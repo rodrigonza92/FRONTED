@@ -19,31 +19,42 @@
                 </div> 
             </div>
             
-            <button class="button3">Usuario</button>
+            <button id="btn-usuario">Usuario</button>
         </div>
         <div class="canales">
             <div class="canales-container">
+                <div class="channels-adheridos"></div>
 
             </div>
             <div class="add-canal-container">
-                <button type="button" class="btn-add-canal"> Añadir canal</button>
+                <button class="btn-add-canal">Añadir canal</button>
             </div>
         </div>
         <div class="contenido-principal">
             <!-- Contenido de la segunda sección -->
+            <div class="mensajes"></div>
+            <div class="mensaje-form"></div>
         </div>
     </div>
 
     <dialog class="add-server-modal">
         <h3>Crear servidor</h3>
         <form class="add-server-form">
-            <label for="nombre">Ingresa el nombre del servidor</label>
+            <label for="nombre">Ingresa el nombre del servidor:</label>
             <input name="nombre" type="text" class="server-name" placeholder="Nombre del servidor">
-            <label for="descripcion">Ingresa una descripcion</label>
+            <label for="descripcion">Ingresa una descripcion:</label>
             <input name="descripcion" type="text" class="server-descripcion">
             <button type="submit" class="submit-crear-servidor">Crear</button>
         </form>
-        
+    </dialog>
+
+    <dialog class="add-channel-modal">
+        <h3>Crear canal</h3>
+        <form class="add-channel-form">
+            <label for="nombre">Ingresa el nombre del canal:</label>
+            <input name="nombre" type="text" class="canal-name" placeholder="Nombre del canal">
+            <button type="submit" class="submit-crear-canal">Crear</button>
+        </form>
     </dialog>
 
     <script src="../scripts/server.js"></script>
